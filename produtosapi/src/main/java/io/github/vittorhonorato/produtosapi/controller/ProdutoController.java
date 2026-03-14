@@ -1,7 +1,11 @@
 package io.github.vittorhonorato.produtosapi.controller;
 
+import io.github.vittorhonorato.produtosapi.dto.ProductDTO;
 import io.github.vittorhonorato.produtosapi.model.ProdutoModel;
 import io.github.vittorhonorato.produtosapi.service.ProdutoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,35 +15,38 @@ import java.util.List;
 public class ProdutoController {
 
 
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
 
+    @Autowired
     public ProdutoController(ProdutoService produtoService) {
         this.produtoService = produtoService;
     }
 
     @GetMapping
-    public List<ProdutoModel> getAllProdutos(){
-        return produtoService.getAll();
+    public ResponseEntity<List<ProductDTO>> getAllProdutos(){
+        return ResponseEntity.ok().body(produtoService.getAll());
     }
 
     @GetMapping("{id}")
-    public ProdutoModel getProdutosById(@PathVariable Long id){
-        return produtoService.getById(id);
+    public ResponseEntity<ProductDTO> getProdutosById(@PathVariable Long id){
+        return ResponseEntity.ok(produtoService.getById(id));
     }
 
     @PostMapping("/create")
-    public ProdutoModel createProduto(@RequestBody ProdutoModel produto){
-        return produtoService.createProduto(produto);
+    public ResponseEntity<Void> createProduto(@RequestBody ProductDTO produto){
+        produtoService.createProduto(produto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteProduto(@PathVariable Long id){
+    public ResponseEntity<Void> deleteProduto(@PathVariable Long id){
         produtoService.deleteProduto(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/update/{id}")
-    public ProdutoModel updateProduto(@RequestBody ProdutoModel produto, @PathVariable Long id){
-        produto.setId(id);
-       return produtoService.createProduto(produto);
+    public ResponseEntity<Void> updateProduto(@RequestBody ProductDTO produto, @PathVariable Long id){
+        produtoService.updateProduto(produto, id);
+       return ResponseEntity.noContent().build();
     }
 }

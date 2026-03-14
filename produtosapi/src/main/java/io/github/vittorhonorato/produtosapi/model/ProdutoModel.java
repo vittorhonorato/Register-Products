@@ -1,5 +1,6 @@
 package io.github.vittorhonorato.produtosapi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,7 +12,9 @@ public class ProdutoModel {
     private Long id;
 
     private String nome;
+
     private double valorUnidade;
+
     private int quantidade;
 
     public Long getId() {
