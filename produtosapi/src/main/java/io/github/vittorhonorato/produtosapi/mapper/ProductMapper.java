@@ -1,23 +1,37 @@
 package io.github.vittorhonorato.produtosapi.mapper;
 
 import io.github.vittorhonorato.produtosapi.dto.ProductDTO;
+import io.github.vittorhonorato.produtosapi.dto.ProductResponseDTO;
 import io.github.vittorhonorato.produtosapi.model.ProdutoModel;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductMapper {
 
-    public static ProductDTO toProductDTO(ProdutoModel model)  {
-        ProductDTO productDTO = ProductDTO.builder()
+    public ProductResponseDTO toProductDTO(ProdutoModel model)  {
+        return ProductResponseDTO.builder()
+                .id(model.getId())
                 .nome(model.getNome())
                 .valorUnidade(model.getValorUnidade())
                 .quantidade(model.getQuantidade())
                 .build();
-
-        return  productDTO;
     }
 
-    public static ProdutoModel toProductModel(ProductDTO dto) {
+    public ProdutoModel toProductModel(ProductDTO dto) {
         ProdutoModel produtoModel = new ProdutoModel();
 
+        produtoModel.setNome(dto.getNome());
+        produtoModel.setQuantidade(dto.getQuantidade());
+        produtoModel.setValorUnidade(dto.getValorUnidade());
+
+        return produtoModel;
+
+    }
+
+    public ProdutoModel toUpdateProductModel(ProductDTO dto, Long id) {
+        ProdutoModel produtoModel = new ProdutoModel();
+
+        produtoModel.setId(id);
         produtoModel.setNome(dto.getNome());
         produtoModel.setQuantidade(dto.getQuantidade());
         produtoModel.setValorUnidade(dto.getValorUnidade());
