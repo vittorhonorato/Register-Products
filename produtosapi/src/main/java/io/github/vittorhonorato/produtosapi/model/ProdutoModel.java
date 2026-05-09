@@ -1,7 +1,9 @@
 package io.github.vittorhonorato.produtosapi.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "tb_produtos")
 public class ProdutoModel {
@@ -11,45 +13,10 @@ public class ProdutoModel {
     private Long id;
 
     private String nome;
-    private double valorUnidade;
-    private int quantidade;
 
-    public Long getId() {
-        return id;
-    }
+    private Double valorUnidade;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getValorUnidade() {
-        return valorUnidade;
-    }
-
-    public void setValorUnidade(double valorUnidade) {
-        this.valorUnidade = valorUnidade;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    @Transient
-    public double getValorTotal() {
-        return valorUnidade * quantidade;
-    }
+    private Integer quantidade;
 
     @Override
     public String toString() {
@@ -58,7 +25,6 @@ public class ProdutoModel {
                 ", nome='" + nome + '\'' +
                 ", valorUnidade=" + valorUnidade +
                 ", quantidade=" + quantidade +
-                ", valorTotal=" + getValorTotal() +
                 '}';
     }
 }
