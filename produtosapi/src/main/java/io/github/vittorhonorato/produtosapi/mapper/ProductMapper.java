@@ -1,6 +1,6 @@
 package io.github.vittorhonorato.produtosapi.mapper;
 
-import io.github.vittorhonorato.produtosapi.dto.ProductDTO;
+import io.github.vittorhonorato.produtosapi.dto.ProductRequestDTO;
 import io.github.vittorhonorato.produtosapi.dto.ProductResponseDTO;
 import io.github.vittorhonorato.produtosapi.model.ProdutoModel;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public ProdutoModel toProductModel(ProductDTO dto) {
+    public ProdutoModel toProductModel(ProductRequestDTO dto) {
         ProdutoModel produtoModel = new ProdutoModel();
 
         produtoModel.setNome(dto.getNome());
@@ -28,7 +28,7 @@ public class ProductMapper {
 
     }
 
-    public ProdutoModel toUpdateProductModel(ProductDTO dto, Long id) {
+    public ProdutoModel toUpdateProductModel(ProductRequestDTO dto, Long id) {
         ProdutoModel produtoModel = new ProdutoModel();
 
         produtoModel.setId(id);

@@ -1,6 +1,6 @@
 package io.github.vittorhonorato.produtosapi.service;
 
-import io.github.vittorhonorato.produtosapi.dto.ProductDTO;
+import io.github.vittorhonorato.produtosapi.dto.ProductRequestDTO;
 import io.github.vittorhonorato.produtosapi.dto.ProductResponseDTO;
 import io.github.vittorhonorato.produtosapi.exception.ProductConflit;
 import io.github.vittorhonorato.produtosapi.exception.ProductNotFound;
@@ -40,7 +40,7 @@ public class ProdutoService implements ProductUseCase {
     }
 
     @Override
-    public void createProduto(ProductDTO produto){
+    public void createProduto(ProductRequestDTO produto){
 
         if(produtoRepository.existsByNome(produto.getNome())) {
             throw new ProductConflit("Produto: " +  produto.getNome() + " já existe");
@@ -57,7 +57,7 @@ public class ProdutoService implements ProductUseCase {
     }
 
     @Override
-    public void updateProduto(ProductDTO produto, Long id) {
+    public void updateProduto(ProductRequestDTO produto, Long id) {
         findProductById(id);
 
         ProdutoModel produtoModel = productMapper.toUpdateProductModel(produto, id);
