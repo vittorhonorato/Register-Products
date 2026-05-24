@@ -2,12 +2,11 @@ package io.github.vittorhonorato.produtosapi.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.vittorhonorato.produtosapi.dto.ProductDTO;
+import io.github.vittorhonorato.produtosapi.dto.ProductRequestDTO;
 import io.github.vittorhonorato.produtosapi.dto.ProductResponseDTO;
-import io.github.vittorhonorato.produtosapi.model.ProdutoModel;
+import io.github.vittorhonorato.produtosapi.service.ProductUseCase;
 import io.github.vittorhonorato.produtosapi.service.ProdutoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 public class ProdutoController {
 
-    private final ProdutoService produtoService;
+    private final ProductUseCase produtoService;
 
     public ProdutoController(ProdutoService produtoService) {
         this.produtoService = produtoService;
@@ -36,7 +35,7 @@ public class ProdutoController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createProduto(@RequestBody @Valid ProductDTO produto) throws JsonProcessingException {
+    public ResponseEntity<String> createProduto(@RequestBody @Valid ProductRequestDTO produto) throws JsonProcessingException {
         produtoService.createProduto(produto);
 
         String mensagemSemanticaCriacao = "Produto criado com sucesso: " + produto;
@@ -54,7 +53,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> updateProduto(@RequestBody ProductDTO produto, @PathVariable Long id){
+    public ResponseEntity<Void> updateProduto(@RequestBody @Valid ProductRequestDTO produto, @PathVariable Long id){
         produtoService.updateProduto(produto, id);
        return ResponseEntity.noContent().build();
     }
